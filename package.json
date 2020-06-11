@@ -24,10 +24,12 @@
   "author": "Terrillo Walls",
   "license": "MIT",
   "devDependencies": {
+    "prettier": "2.0.5",
     "react": "16.8.3",
     "react-native": ">=0.40.0"
   },
   "peerDependencies": {
     "react-native": ">=0.40.0"
-  }
+  },
+  "types": "./index.d.ts"
 }
