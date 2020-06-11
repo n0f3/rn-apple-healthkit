@@ -61,6 +61,13 @@ export interface ValueDate {
   endDate: string;
 }
 
+export interface DistanceSaveOptions {
+  unit: 'meter' | 'mile' | 'inch' | 'foot' | 'yard',
+  value: number,
+  startDate: string,
+  endDate: string
+}
+
 export interface AppleHealthKit {
   authorizationStatusForType(type: string): Promise<string>;
 
@@ -175,6 +182,21 @@ export interface AppleHealthKit {
     options: ValueDate,
     callback: (error: Object, result: Object) => void
   ): void;
+
+  saveDistanceWalkingRunning(
+    options: DistanceSaveOptions,
+    callback: (err: Object, result: Object) => void
+  ): void;
+
+  saveDistanceCycling(
+    options: DistanceSaveOptions,
+    callback: (err: Object, results: Object) => void
+  ): void
+
+  saveActiveEnergyBurned(
+    options: ValueDate,
+    callbacK: (err: Object, result: Object) => void
+  ): void
 
   getDateOfBirth(
     options: any,
