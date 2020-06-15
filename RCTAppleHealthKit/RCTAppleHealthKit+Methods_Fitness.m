@@ -435,4 +435,40 @@
                                       }];
 }
 
+- (void)fitness_saveWorkout:(NSDictionary *)input callback:(RCTResponseSenderBlock)callback
+{
+    NSUInteger type = [RCTAppleHealthKit uintFromOptions:input key:@"type" withDefault:HKWorkoutActivityTypeCoreTraining];
+    NSDate *start = [RCTAppleHealthKit dateFromOptions:input key:@"startDate" withDefault:[NSDate date]];
+    NSDate *end = [RCTAppleHealthKit dateFromOptions:input key:@"endDate" withDefault:[NSDate date]];
+    double duration = [RCTAppleHealthKit doubleFromOptions:input key:@"duration" withDefault:0];
+
+    // burned energy
+    double energyBurnedAmount = [RCTAppleHealthKit doubleFromOptions:input key:@"energyBurned" withDefault:0];
+    HKUnit *energyBurnedUnit = [RCTAppleHealthKit hkUnitFromOptions:input key:@"energyBurnedUnit" withDefault:[HKUnit kilocalorieUnit]];
+    HKQuantity *energyBurned = [HKQuantity quantityWithUnit:energyBurnedUnit doubleValue:energyBurnedAmount];
+
+    // total distance
+    double totalDistanceAmount = [RCTAppleHealthKit doubleFromOptions:input key:@"totalDistance" withDefault:0];
+    HKUnit *totalDistanceUnit = [RCTAppleHealthKit hkUnitFromOptions:input key:@"totalDistanceUnit" withDefault:[HKUnit meterUnit]];
+    HKQuantity *totalDistance = [HKQuantity quantityWithUnit:totalDistanceUnit doubleValue:totalDistanceAmount];
+
+    HKWorkout *training =
+    [HKWorkout workoutWithActivityType:type
+                             startDate:start
+                               endDate:end
+                              duration:duration
+                     totalEnergyBurned:energyBurned
+                         totalDistance:totalDistance
+                              metadata:@{}];
+
+    [self.healthStore saveObject:training withCompletion:^(BOOL success, NSError *error) {
+        if (!success) {
+            callback(@[RCTJSErrorFromNSError(error)]);
+            return;
+        }
+
+        callback(@[[NSNull null], @{@"success": @(YES)}]);
+    }];
+}
+
 @end

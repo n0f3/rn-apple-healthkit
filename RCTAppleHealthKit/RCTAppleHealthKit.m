@@ -275,6 +275,11 @@ RCT_EXPORT_METHOD(getMindfulSession:(NSDictionary *)input callback:(RCTResponseS
     [self mindfulness_getMindfulSession:input callback:callback];
 }
 
+RCT_EXPORT_METHOD(saveWorkout:(NSDictionary*)input callback:(RCTResponseSenderBlock)callback)
+{
+    [self fitness_saveWorkout:input callback:callback];
+}
+
 - (void)isHealthKitAvailable:(RCTResponseSenderBlock)callback
 {
     BOOL isAvailable = NO;

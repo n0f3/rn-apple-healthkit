@@ -61,11 +61,22 @@ export interface ValueDate {
   endDate: string;
 }
 
+export type DistanceUnit = 'meter' | 'mile' | 'inch' | 'foot' | 'yard';
+
 export interface DistanceSaveOptions {
-  unit: 'meter' | 'mile' | 'inch' | 'foot' | 'yard',
+  unit: DistanceUnit,
   value: number,
   startDate: string,
   endDate: string
+}
+
+export interface WorkoutOptions {
+  type: Activities,
+  startDate: string,
+  endDate: string,
+  duration?: number,
+  totalDistance: number,
+  totalDistanceUnit: DistanceUnit
 }
 
 export interface AppleHealthKit {
@@ -195,8 +206,13 @@ export interface AppleHealthKit {
 
   saveActiveEnergyBurned(
     options: ValueDate,
-    callbacK: (err: Object, result: Object) => void
+    callback: (err: Object, result: Object) => void
   ): void
+
+  saveWorkout(
+    options: WorkoutOptions,
+    callback: (err: Object, result: Object) => void
+  ): void;
 
   getDateOfBirth(
     options: any,
@@ -402,6 +418,84 @@ export enum HealthUnit {
   pound = 'pound',
   second = 'second',
   yard = 'yard'
+}
+
+export enum Activities {
+  archery = 2,
+  bowling = 7,
+  fencing = 18,
+  gymnastics = 22,
+  trackAndField = 49,
+  americanFootball = 1,
+  australianFootball = 3,
+  baseball = 5,
+  basketball = 6,
+  cricket = 10,
+  discSports = 75,
+  handball = 23,
+  hockey = 25,
+  lacrosse = 27,
+  rugby = 36,
+  soccer = 41,
+  softball = 42,
+  volleyball = 51,
+  preparationAndRecovery = 33,
+  flexibility = 62,
+  walking = 52,
+  running = 37,
+  wheelchairWalkPace = 70,
+  wheelchairRunPace = 71,
+  cycling = 13,
+  handCycling = 74,
+  coreTraining = 59,
+  elliptical = 16,
+  functionalStrengthTraining = 20,
+  traditionalStrengthTraining = 50,
+  crossTraining = 11,
+  mixedCardio = 73,
+  highIntensityIntervalTraining = 63,
+  jumpRope = 64,
+  stairClimbing = 44,
+  stairs = 68,
+  stepTraining = 69,
+  fitnessGaming = 76,
+  barre = 58,
+  dance = 14,
+  yoga = 57,
+  mindAndBody = 28,
+  pilates = 66,
+  badminton = 4,
+  racquetball = 34,
+  squash = 43,
+  tableTennis = 47,
+  tennis = 48,
+  climbing = 9,
+  equestrianSports = 17,
+  fishing = 19,
+  golf = 21,
+  hiking = 24,
+  hunting = 26,
+  play = 32,
+  crossCountrySkiing = 60,
+  curling = 12,
+  downhillSkiing = 61,
+  snowSports = 40,
+  snowboarding = 67,
+  skatingSports = 39,
+  paddleSports = 31,
+  rowing = 35,
+  sailing = 38,
+  surfingSports = 45,
+  swimming = 46,
+  waterFitness = 53,
+  waterPolo = 54,
+  waterSports = 55,
+  boxing = 8,
+  kickboxing = 65,
+  martialArts = 28,
+  taiChi = 72,
+  wrestling = 56,
+  other = 3000,
 }
 
 const appleHealthKit: AppleHealthKit;
